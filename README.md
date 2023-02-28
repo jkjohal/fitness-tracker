@@ -1,6 +1,11 @@
 # Fitness Tracker App
 This fitness tracker app is a web-based application designed to help users keep track of their fitness activities, such as workouts and meals, and monitor their progress towards their fitness goals. The app is built using React, Node.js, MongoDB, Mongoose, GraphQL, CSS, Apollo Client, and is also a Progressive Web App.
 
+![image](https://user-images.githubusercontent.com/112898278/221742811-b5be6dfe-73b5-454d-9f83-6519334c0477.png)
+
+## Wireframe
+
+![Untitled drawing](https://user-images.githubusercontent.com/112898278/221748383-36ce2bb1-bd46-4afb-aff5-346e2e909290.jpg)
 ## Features
 The fitness tracker app has the following features:
 
@@ -18,7 +23,7 @@ The fitness tracker app is built using the following technologies:
 - Mongoose: A MongoDB object modeling tool used to simplify database operations.
 - GraphQL: A query language for APIs that allows developers to request only the data they need.
 - CSS: A styling language used to define the look and feel of the app.
-Apollo Client: A powerful GraphQL client that makes it easy to fetch and manage data in the app.
+- Apollo Client: A powerful GraphQL client that makes it easy to fetch and manage data in the app.
 - Progressive Web App: A web-based application that can be installed on a user's device and accessed offline.
 
 ## Installation
@@ -37,5 +42,6 @@ The fitness tracker app is a robust and user-friendly application that makes it 
 
 - Dionne Angeles
 - Jeevan Johal
+
 
 
