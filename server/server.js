@@ -4,27 +4,28 @@ const db = require('./config/connection');;
 const { ApolloServer } = require('apollo-server-express');
 const { typeDefs, resolvers } = require('./schema')
 
-const app = express();
+console.log ("line 7")
 const PORT = process.env.PORT || 3001;
 
 const server = new ApolloServer({
   typeDefs,
   resolvers
 })
-
+console.log ("line 14")
+const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
+console.log ("line 18")
 // if we're in production, serve client/build as static assets
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
 }
-
+console.log ("line 23")
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async (typeDefs, resolvers) => {
   await server.start();
   server.applyMiddleware({ app });
-  
+  console.log ("line28")
   db.once('open', () => {
     app.listen(PORT, () => {
       console.log(`API server running on port ${PORT}!`);

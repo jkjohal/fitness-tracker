@@ -1,14 +1,13 @@
 import React from 'react';
-import { Box, Typography } from '@material-ui/core';
+import './Home.css';
 
-const Home = () => {
+function Home() {
   return (
-    <Box bgcolor='gray.100' py={8}>
-      <Typography variant='h1' align='center' fontWeight='bold' gutterBottom>
-        Welcome to Fitness Tracker App!
-      </Typography>
-    </Box>
+    <div className="home-container">
+      <h1 className="home-heading">Welcome to the Fitness Tracker App!</h1>
+    </div>
   );
-};
+}
 
 export default Home;
+
