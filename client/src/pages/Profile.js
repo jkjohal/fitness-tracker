@@ -1,10 +1,10 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 
-import { GET_CURRENT_USER } from '../queries';
+import { GET_USER } from '../queries';
 
 const Profile = () => {
-  const { loading, error, data } = useQuery(GET_CURRENT_USER);
+  const { loading, error, data } = useQuery(GET_USER);
 
   if (loading) {
     return <p>Loading...</p>;
