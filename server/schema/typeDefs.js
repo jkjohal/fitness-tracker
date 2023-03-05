@@ -1,101 +1,42 @@
-const { gql } = require('apollo-server');
+const { gql } = require('apollo-server-express');
+
 const typeDefs = gql`
-  type Query {
-    user(id: ID!): User
-    users: [User!]!
-    workout(id: ID!): Workout
-    workouts(userId: ID!): [Workout!]!
-  }  
   type User {
-        id: ID!
-        name: String!
-        email: String!
-        workouts: [Workout!]!
-      }
-    
-      type Workout {
-        id: ID!
-        name: String!
-        description: String
-        exercises: [Exercise!]!
-        user: User!
-        date: String!
-      }
-      
-      type Exercise {
-            id: ID!
-            description: String!
-            duration: Int!
-            date: String!
-          }
-          
-          type Mutation {
-            createUser(input: CreateUserInput!): User
-            createWorkout(input: CreateWorkoutInput!): Workout
-          }  
-          
-          input CreateUserInput {
-                name: String!
-                email: String!
-                password: String!
-              }
-              
-          input CreateWorkoutInput {
-                    name: String!
-                    description: String!
-                    exercises: [CreateExerciseInput!]!
-                  }
-                  
-                  input CreateExerciseInput {
-                        description: String!
-                        duration: Int!
-                      }`
+    _id: ID
+    username: String
+    email: String
+    password: String
+    workouts: [Workout]
+  }
 
+  type Workout {
+    _id: ID
+    workoutName: String
+    createdAt: String
+  }
 
-// type Mutation {
-//   createUser(input: CreateUserInput!): User
-//   createWorkout(input: CreateWorkoutInput!): Workout
-// }
+  input WorkoutInput {
+    workoutName: String!
+    createdAt: String!
+  }
 
-//   type User {
-//     id: ID!
-//     name: String!
-//     email: String!
-//     workouts: [Workout!]!
-//   }
+  type Query {
+    me: User
+    workouts(username: String): [Workout]
+    workout(_id: ID!): Workout
+  }
 
-//   type Workout {
-//     id: ID!
-//     name: String!
-//     description: String
-//     exercises: [Exercise!]!
-//     user: User!
-//     date: String!
-//   }
+  type Auth {
+    token: ID!
+    user: User
+  }
 
-//   type Exercise {
-//     id: ID!
-//     description: String!
-//     duration: Int!
-//     date: String!
-//   }
-
-//   input CreateUserInput {
-//     name: String!
-//     email: String!
-//     password: String!
-//   }
-
-//   input CreateWorkoutInput {
-//     name: String!
-//     description: String
-//     exercises: [CreateExerciseInput!]!
-//   }
-
-//   input CreateExerciseInput {
-//     description: String!
-//     duration: Int!
-//   }
-
+  type Mutation {
+    addUser(username: String!, email: String!, password: String!): Auth
+    login(email: String!, password: String!): Auth
+    saveWorkout(input: WorkoutInput!): User
+    removeWorkout(workoutId: ID!): User
+  }
+`;
 
 module.exports = typeDefs;

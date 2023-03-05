@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-// import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-
 import { SIGNUP_USER } from '../utils/mutations';
-// import Auth from '../utils/auth';
+
 
 const Signup = () => {
-  const [formData, setFormData] = useState({
+  const [formState, setFormState] = useState({
     name: '',
     email: '',
     password: '',
@@ -17,72 +15,74 @@ const Signup = () => {
     activityLevel: '',
   });
 
-  const [signupUser, { loading, error }] = useMutation(SIGNUP_USER);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    signupUser({ variables: { input: formData } });
-  };
+  const [signupUser, { error }] = useMutation(SIGNUP_USER);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData((prevState) => ({ ...prevState, [name]: value }));
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
   };
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Error: {error.message}</p>;
-  }
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const { data } = await signupUser({
+        variables: { input: formState },
+      });
+      console.log(data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <div>
       <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleFormSubmit}>
         <label htmlFor="name">Name:</label>
         <input
           type="text"
-          id="name"
           name="name"
-          value={formData.name}
+          id="name"
           onChange={handleChange}
+          value={formState.name}
         />
 
         <label htmlFor="email">Email:</label>
         <input
           type="email"
-          id="email"
           name="email"
-          value={formData.email}
+          id="email"
           onChange={handleChange}
+          value={formState.email}
         />
 
         <label htmlFor="password">Password:</label>
         <input
           type="password"
-          id="password"
           name="password"
-          value={formData.password}
+          id="password"
           onChange={handleChange}
+          value={formState.password}
         />
 
         <label htmlFor="age">Age:</label>
         <input
           type="number"
-          id="age"
           name="age"
-          value={formData.age}
+          id="age"
           onChange={handleChange}
+          value={formState.age}
         />
 
         <label htmlFor="gender">Gender:</label>
         <select
-          id="gender"
           name="gender"
-          value={formData.gender}
+          id="gender"
           onChange={handleChange}
+          value={formState.gender}
         >
           <option value="">Select gender</option>
           <option value="male">Male</option>
@@ -93,27 +93,27 @@ const Signup = () => {
         <label htmlFor="height">Height (in cm):</label>
         <input
           type="number"
-          id="height"
           name="height"
-          value={formData.height}
+          id="height"
           onChange={handleChange}
+          value={formState.height}
         />
 
         <label htmlFor="weight">Weight (in kg):</label>
         <input
           type="number"
-          id="weight"
           name="weight"
-          value={formData.weight}
+          id="weight"
           onChange={handleChange}
+          value={formState.weight}
         />
 
         <label htmlFor="activityLevel">Activity Level:</label>
         <select
-          id="activityLevel"
           name="activityLevel"
-          value={formData.activityLevel}
+          id="activityLevel"
           onChange={handleChange}
+          value={formState.activityLevel}
         >
           <option value="">Select activity level</option>
           <option value="sedentary">Sedentary</option>
@@ -124,6 +124,7 @@ const Signup = () => {
 
         <button type="submit">Sign Up</button>
       </form>
+      {error && <div>Sign up failed</div>}
     </div>
   );
 };
