@@ -1,21 +1,28 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 //import Navigation from './components/Navigation';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Signup from './pages/Signup';
+import Footer from './pages/Footer';
 
 function App() {
+
   return (
     <Router>
-      <Home/>
-      <Routes>
-        <Route path="/" exact component={Home} />
-        <Route path="/profile" component={Profile} />
-        <Route path="/signup" component={Signup} />
-      </Routes>
+      <div className='App'>
+        <Home />
+        <Routes>
+          <Route path="/" exact element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/signup" element={<Signup />} />
+        </Routes>
+        <Footer />
+      </div>
     </Router>
+
   );
+
 }
 
 export default App;
