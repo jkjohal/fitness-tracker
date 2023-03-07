@@ -1,97 +1,64 @@
-const { User, Workout } = require('../models');
-const { AuthenticationError } = require('apollo-server-express');
+// const { AuthenticationError } = require('apollo-server-express');
+// const { User, Workout } = require('../models');
+// const { signToken } = require('../utils/auth');
+
+const User = require('../models/user');
+const Workout = require('../models/workout');
+const Exercise = require('../models/exercise');
 
 const resolvers = {
   Query: {
-    me: async (parent, args, context) => {
-      if (context.user) {
-        try {
-          const user = await User.findById(context.user._id).populate('workouts');
-          return user;
-        } catch (err) {
-          console.log(err);
-          throw new Error('Unable to get user');
-        }
-      }
-      throw new AuthenticationError('You need to be logged in!');
+    async user(_, { id }) {
+      const user = await User.findById(id).populate('workouts');
+      return user;
     },
-    workouts: async (parent, { username }) => {
-      try {
-        const params = username ? { username } : {};
-        return await Workout.find(params).sort({ createdAt: -1 });
-      } catch (err) {
-        console.log(err);
-        throw new Error('Unable to get workouts');
-      }
+
+    async users() {
+      const users = await User.find().populate('workouts');
+      return users;
     },
-    workout: async (parent, { _id }) => {
-      try {
-        return await Workout.findById(_id);
-      } catch (err) {
-        console.log(err);
-        throw new Error('Unable to get workout');
-      }
+
+    async workout(_, { id }) {
+      const workout = await Workout.findById(id).populate('user').populate('exercises');
+      return workout;
+    },
+
+    async workouts(_, { userId }) {
+      const workouts = await Workout.find({ user: userId }).populate('user').populate('exercises');
+      return workouts;
     },
   },
+
   Mutation: {
-    addUser: async (parent, args) => {
-      try {
-        const user = await User.create(args);
-        const token = signToken(user);
-        return { token, user };
-      } catch (err) {
-        console.log(err);
-        throw new Error('Unable to add user');
-      }
+    async createUser(_, { input }) {
+      const user = await User.create(input);
+      return user;
     },
-    login: async (parent, { email, password }) => {
-      try {
-        const user = await User.findOne({ email });
-        if (!user) {
-          throw new AuthenticationError('Incorrect email or password');
-        }
-        const correctPw = await user.isCorrectPassword(password);
-        if (!correctPw) {
-          throw new AuthenticationError('Incorrect email or password');
-        }
-        const token = signToken(user);
-        return { token, user };
-      } catch (err) {
-        console.log(err);
-        throw new Error('Unable to log in');
-      }
+
+    async createWorkout(_, { input }) {
+      const { userId, exercises, ...rest } = input;
+
+      const workout = await Workout.create({
+        user: userId,
+        exercises: exercises.map(exercise => new Exercise(exercise)),
+        ...rest,
+      });
+
+      await User.findByIdAndUpdate(userId, { $push: { workouts: workout._id } });
+
+      return workout;
     },
-    saveWorkout: async (parent, { input }, context) => {
-      if (context.user) {
-        try {
-          const updatedUser = await User.findByIdAndUpdate(
-            { _id: context.user._id },
-            { $push: { workouts: input } },
-            { new: true }
-          );
-          return updatedUser;
-        } catch (err) {
-          console.log(err);
-          throw new Error('Unable to save workout');
-        }
-      }
-      throw new AuthenticationError('You need to be logged in!');
+  },
+
+  Workout: {
+    async user(workout) {
+      const user = await User.findById(workout.user);
+      return user;
     },
-    removeWorkout: async (parent, { workoutId }, context) => {
-      if (context.user) {
-        try {
-          const updatedUser = await User.findByIdAndUpdate(
-            { _id: context.user._id },
-            { $pull: { workouts: { _id: workoutId } } },
-            { new: true }
-          );
-          return updatedUser;
-        } catch (err) {
-          console.log(err);
-          throw new Error('Unable to remove workout');
-        }
-      }
-      throw new AuthenticationError('You need to be logged in!');
+
+    async exercises(workout) {
+      const populatedWorkout = await workout.populate('exercises').execPopulate();
+      return populatedWorkout.exercises;
     },
   },
 };

@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 
-const User = require('./user');
-const Workout = require('./workout');
-const Exercise = require('./exercise');
+// const User = require('./user');
+// const Workout = require('./workout');
+// const Exercise = require('./exercise');
 
 
-module.exports = {User, Exercise, Workout};
+// module.exports = {User, Exercise, Workout};

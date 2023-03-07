@@ -1,20 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './Navigation.css';
 
 function Navigation() {
   return (
-    <nav className="bg-pink-600">
-      <div className="container mx-auto py-4 px-6 flex justify-between items-center">
-        <Link to="/" className="text-white font-bold text-lg">Fitness Tracker</Link>
-        <ul className="flex items-center">
-          <li>
-            <Link to="/profile" className="text-white font-bold hover:text-gray-200 mr-4">Profile</Link>
-          </li>
-          <li>
-            <Link to="/signup" className="text-white font-bold hover:text-gray-200">Sign Up</Link>
-          </li>
-        </ul>
-      </div>
+    <nav className="navbar">
+      <Link to="/" className="navbar-brand">Fitness Tracker</Link>
+      <ul className="navbar-nav">
+        <li className="nav-item">
+          <Link to="/profile" className="nav-link">Profile</Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/signup" className="nav-link">Sign up</Link>
+        </li>
+      </ul>
     </nav>
   );
 }
