@@ -4,5 +4,4 @@
 // const Workout = require('./workout');
 // const Exercise = require('./exercise');
 
-
-// module.exports = {User, Exercise, Workout};
+ //module.exports = {User, Exercise, Workout};

@@ -1,0 +1,110 @@
+.profile-container {
+  background: linear-gradient(to right, #2c3e50, #1abc9c);
+  color: #fff;
+  font-family: 'Open Sans', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar {
+  width: 95%;
+  height: 25vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.navbar ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar li {
+  margin: 0 0.5rem;
+}
+
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.profile-main {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2rem;
+  margin: 3rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.profile-main h1 {
+  margin-top: 0;
+}
+
+.profile-main form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.profile-main label {
+  font-size: 1.2rem;
+  margin-top: 1rem;
+}
+
+.profile-main input,
+.profile-main select {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.profile-main button {
+  padding: 0.5rem;
+  margin-top: 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.profile-main button:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+.footer {
+  width: 100%;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #333;
+  text-align: center;
+  font-weight: bold;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 0.8rem;
+}
+
+@media screen and (max-width: 768px) {
+  .profile-main {
+    margin: 1rem;
+  }
+}

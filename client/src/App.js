@@ -1,18 +1,20 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-//import Navigation from './components/Navigation';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
+import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Signup from './pages/Signup';
+import AddWorkout from './pages/AddWorkout';
 
 function App() {
   return (
     <Router>
-      <Home/>
       <Routes>
-        <Route path="/" exact component={Home} />
-        <Route path="/profile" component={Profile} />
-        <Route path="/signup" component={Signup} />
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/addworkout" element={<AddWorkout />} />
       </Routes>
     </Router>
   );
